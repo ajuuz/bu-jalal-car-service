@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import HomeHeroSection from "@/components/user/HomeHeroSection";
 import { carImages, partsImage } from "@/lib/staticImages";
 import Link from "next/link";
 
@@ -82,16 +83,7 @@ export default function Home() {
         <input className="w-1/2 bg-slate-50 px-6 py-3 rounded-full border-none outline-none text-lg" placeholder="SEARCH PARTS..." />
         <span className="absolute left-1/2 top-1/2 -translate-y-1/2 text-2xl text-gray-400">🔍</span>
 
-        {/* <AnimatePresence mode='wait'>
-        {
-          engineImageIndex===0
-          ?<motion.div key={engineImageIndex} initial={{opacity:0, translate:{x:'0px'}}} animate={{opacity:1,translate:{x:'50px'}}} exit={{opacity:0,translate:{x:'0px'}}} transition={{duration:0.6,ease:easeInOut}}><img  src={engine1} alt="engine" className=" absolute right-8 top-1/2 -translate-y-1/2" /></motion.div>
-          :engineImageIndex===1
-          ?<motion.div key={engineImageIndex} initial={{opacity:0, translate:{x:'0px'}}} animate={{opacity:1,translate:{x:'50px'}}} exit={{opacity:0,translate:{x:'0px'}}} transition={{duration:0.6,ease:easeInOut}}><img  src={engine2} alt="engine" className=" absolute right-8 top-1/2 -translate-y-1/2" /></motion.div>
-          :<motion.div key={engineImageIndex} initial={{opacity:0, translate:{x:'0px'}}} animate={{opacity:1,translate:{x:'50px'}}} exit={{opacity:0,translate:{x:'0px'}}} transition={{duration:0.6,ease:easeInOut}}><img  src={engine3} alt="engine" className=" absolute right-8 top-1/2 -translate-y-1/2" /></motion.div>
-        }
-        </AnimatePresence> */}
-
+        <HomeHeroSection/>
       </section>
 
       {/* Offers */}
