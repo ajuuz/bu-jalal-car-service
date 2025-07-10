@@ -4,7 +4,6 @@ import React, { useEffect, useRef, useState } from 'react'
 import {AnimatePresence, motion} from 'framer-motion';
 import { engineImage } from '@/lib/staticImages';
 
-// const engine = 
 
 const HomeHeroSection = () => {
      const [engineImageIndex,setEngineImageIndex]=useState(0);
