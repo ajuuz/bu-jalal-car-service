@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react'
 import {AnimatePresence, motion} from 'framer-motion';
-import { engineImage } from '@/lib/staticImages';
+import { engineImage } from '@/constants/staticImages';
 
 
 const HomeHeroSection = () => {

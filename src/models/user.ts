@@ -1,4 +1,4 @@
-import mongoose, { ObjectId, Schema } from "mongoose";
+import mongoose, { models, ObjectId, Schema } from "mongoose";
 
 interface IUserEntity{
     _id:ObjectId
@@ -27,4 +27,4 @@ const userSchema:Schema<IUserModel>=new mongoose.Schema<IUserModel>({
     }
 },{timestamps:true})
 
-export const userModel = mongoose.model<IUserModel>('User',userSchema)
+export const userModel =models.User || mongoose.model<IUserModel>('User',userSchema)
