@@ -42,7 +42,12 @@ const SignupForm = () => {
             return;
         }
 
-        const data = await createUser(parsed.data)
+        const response = await createUser(parsed.data);
+            if(!response.success){
+                console.log(response.message)
+            }else{
+                console.log(response.message)
+            }
     }
 
   return (
