@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FaImage } from "react-icons/fa6";
+import { imageUploader } from "@/util/helperFunctions/imageUploader";
 
 
 export default function AddBrandPage() {
@@ -21,10 +22,18 @@ export default function AddBrandPage() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async(e: React.FormEvent) => {
     e.preventDefault();
     // Handle API submission here
-    console.log("Form submitted");
+    if(!image) return
+    try{
+       const imageUrls = await imageUploader([image]) as string[]
+       const url = imageUrls[0]
+       console.log("url",url)
+    }
+    catch(error){
+      console.log(error)
+    }
   };
 
   return (
