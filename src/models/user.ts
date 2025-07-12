@@ -1,4 +1,4 @@
-import { ROLES } from "@/constants/enums";
+import { ROLES } from "@/shared/constants/enums";
 import mongoose, { models, ObjectId, Schema } from "mongoose";
 
 interface IUserEntity{

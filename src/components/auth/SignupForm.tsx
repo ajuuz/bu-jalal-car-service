@@ -19,7 +19,7 @@ const SignupForm = ({setTab}:Props) => {
         password:''
     })
 
-    const [error,setErrors]=useState<Partial<Record<keyof SignupType,string>>>({})
+    const [error,setErrors]=useState<Partial<SignupType>>({})
 
 
      const handleChange=(e:React.ChangeEvent<HTMLInputElement>)=>{
