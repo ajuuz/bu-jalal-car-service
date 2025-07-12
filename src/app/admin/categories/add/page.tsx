@@ -5,13 +5,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Upload } from "lucide-react";
 import { FaImage } from "react-icons/fa6";
 
 
 export default function AddBrandPage() {
-  const [image,setImage] = useState<File | null>(null);
-  const [preview,setPreview] = useState<string | null>(null);
+  const [image,setImage] = useState<File|null>(null);
+  const [preview,setPreview] = useState<string|null>(null);
 
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,7 +31,7 @@ export default function AddBrandPage() {
     <div className=" px-6 md:px-12">
       <Card className="max-w-3xl mx-auto shadow-2xl">
         <CardHeader>
-          <CardTitle className="text-2xl font-bold text-center">Add New Brand</CardTitle>
+          <CardTitle className="text-2xl font-bold text-center">Add New Category</CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -43,20 +42,20 @@ export default function AddBrandPage() {
                     ) : (
                      <div className="w-32 h-32 flex items-center justify-center bg-gray-100 border rounded-md">
                        <FaImage className="text-gray-400 scale-150"/>
-                        <Input id="brandImage" type="file" accept="image/*" onChange={handleImageChange} className="w-full hidden"/>
+                        <Input id="catImage" type="file" accept="image/*" onChange={handleImageChange} className="w-full hidden"/>
                      </div>
                    )}
-                   <Label htmlFor="brandImage" className="w-full bg-black text-white p-2 rounded-md flex justify-center">Add Image</Label>
+                   <Label htmlFor="catImage" className="w-full bg-black text-white p-2 rounded-md flex justify-center">Add Image</Label>
                 </div>
               </div>
             <div className="space-y-3">
-              <Label htmlFor="brandName">Brand Name</Label>
-              <Input id="brandName" name="brandName" placeholder="e.g. Nike, Adidas" required />
+              <Label htmlFor="catName">Category Name</Label>
+              <Input id="catName" name="catName" placeholder="e.g. Body Parts , Hoods" required />
             </div>
 
             <div className="pt-4">
               <Button type="submit" className="w-full text-lg py-6 rounded-xl">
-                Save Brand
+                Save Category
               </Button>
             </div>
           </form>
