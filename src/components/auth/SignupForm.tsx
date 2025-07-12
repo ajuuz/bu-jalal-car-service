@@ -4,7 +4,7 @@ import React, {useState} from 'react'
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
 import {SignupType, signupZodSchema } from '@/zodSchema/authZodSchema'
-import { createUser } from '@/actions/auth/authActions'
+import { createUser } from '@/serverActions/auth/authActions'
 import { treeifyError } from 'zod'
 
 type Props={
