@@ -8,10 +8,10 @@ import { createUser } from '@/actions/auth/authActions'
 import { treeifyError } from 'zod'
 
 type Props={
-    context:"Sign Up"
+    setTab:React.Dispatch<React.SetStateAction<'signup' | 'login'>>
 }
 
-const SignupForm = () => {
+const SignupForm = ({setTab}:Props) => {
 
     const [formData,setFormData]=useState<SignupType>({
         name:'',
@@ -47,6 +47,7 @@ const SignupForm = () => {
                 console.log(response.message)
             }else{
                 console.log(response.message)
+                setTab(prev=>prev==='login'?'signup':'login')
             }
     }
 
@@ -58,7 +59,7 @@ const SignupForm = () => {
             <Input onChange={handleChange} name='email'  placeholder="email: example@gmail.com"/>
             {error.email && (<p className="text-red-500 text-xs">{error.email}</p>)}
 
-            <Input onChange={handleChange} name='password'  placeholder="password"/>
+            <Input onChange={handleChange} name='password' type='password'  placeholder="password"/>
              {error.password && (<p className="text-red-500 text-xs">{error.password}</p> )}
 
             <Button onClick={handleSignup} className="w-full">Sign Up</Button>

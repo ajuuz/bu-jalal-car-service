@@ -18,7 +18,7 @@ export const createUser=async (formData:SignupType):Promise<Omit<ServerActionRes
         await dbConnect();
       const newUser = new userModel(formData);
       await newUser.save()
-      return {success:true,message:'User Created Successfully'}
+      return {success:true,message:'User Signed Up Successfully'}
     }
     catch(error:any){
         if(error?.code===11000){

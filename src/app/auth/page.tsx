@@ -1,6 +1,6 @@
 'use client'
 
-import LoginForm from "@/components/auth/AuthForm";
+import LoginForm from "@/components/auth/LoginForm";
 import GoogleAuth from "@/components/auth/GoogleAuth";
 import SignupForm from "@/components/auth/SignupForm";
 import { Separator } from "@/components/ui/separator";
@@ -24,7 +24,7 @@ const page = () => {
             {
                 tab==='login'
                 ?<LoginForm/>
-                :<SignupForm />
+                :<SignupForm setTab={setTab}/>
             }
 
             <div className="flex items-center w-full">
