@@ -18,3 +18,16 @@ export type SubCatFormType = z.infer<typeof subCatFormZodSchema>
 //brand form zod
 export const brandFormZodSchema = formZodSchema;
 export type BrandFormType = z.infer<typeof brandFormZodSchema>
+
+//product form zod
+export const productZodeFormSchema = formZodSchema.extend({
+    images: z.array(z.union([z.instanceof(File), z.null()])).refine(
+    (arr) => arr.filter((img) => img instanceof File).length > 2,
+    { message: "At least 3 image must be selected" }
+  ),
+    subCategory:z.string().min(1, "subCategory must be selected"),
+    brand:z.string().min(1, "Brand must be selected"),
+    price:z.number().min(0, "Price cannot be negative"),
+    description:z.string().min(7, "At least 7 characters needed"),
+})
+export type ProductFormType = z.infer<typeof productZodeFormSchema>

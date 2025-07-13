@@ -35,7 +35,7 @@ export default function Page() {
     }
     
     const form = new FormData(e.currentTarget);
-    const name = form.get('brandImage') as string
+    const name = form.get('brandName') as string
     const parsed = formZodSchema.safeParse({name,images})
     if(!parsed.success){
       const errorTree = z.treeifyError(parsed.error);
@@ -71,7 +71,7 @@ export default function Page() {
                     ) : (
                      <div className="w-32 h-32 flex items-center justify-center bg-gray-100 border rounded-md">
                        <FaImage className="text-gray-400 scale-150"/>
-                        <Input id="brandImage" type="file" accept="image/*" onChange={handleImageChange} className="w-full hidden"/>
+                        <Input id="brandImage" name="brandImage" type="file" accept="image/*" onChange={handleImageChange} className="w-full hidden"/>
                      </div>
                    )}
                    <div>
@@ -81,8 +81,8 @@ export default function Page() {
                 </div>
               </div>
             <div className="space-y-3">
-              <Label htmlFor="brandImage">Brand Name</Label>
-              <Input id="brandImage" name="brandImage" placeholder="e.g. Body Parts , Hoods" required />
+              <Label htmlFor="brandName">Brand Name</Label>
+              <Input id="brandName" name="brandName" placeholder="e.g. Body Parts , Hoods" required />
                      {errors?.name && <p className="text-red-500 text-center">{errors.name}</p>}
             </div>
 
