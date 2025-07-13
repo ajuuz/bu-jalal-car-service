@@ -13,13 +13,16 @@ import z from "zod";
 import { createProduct } from "@/serverActions/admin/productAction";
 import { getBrands } from "@/services/admin/brandApi";
 import { getSubCategories } from "@/services/admin/subCategoryApi";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export default function Page() {
   const [images, setImages] = useState<(File|null)[]>([null,null,null])
   const [errors,setErrors] = useState<Partial<Record<keyof ProductFormType,string>>>({})
   const [brands,setBrands] = useState<BrandDTO[]>([])
   const [subCategories,setSubCategories] = useState<SubCategoryDTO[]>([])
-
+  const [loading,setLoading] = useState<boolean>(false)
+  const router = useRouter();
 
     useEffect(()=>{
         (async function(){
@@ -70,8 +73,17 @@ export default function Page() {
     }
 
     if(parsed.data){
-        const response = await createProduct(parsed.data)
-        console.log(response)
+        setLoading(true)
+        try{
+            const response = await createProduct(parsed.data)
+            setLoading(false)
+            toast.success(response.message)
+            router.push('/admin/products')
+        }
+        catch(error:any){
+            console.log(error)
+            toast.error(error.message)
+        }
     }
   };
 

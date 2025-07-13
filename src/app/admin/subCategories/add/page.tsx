@@ -11,6 +11,8 @@ import z from "zod";
 import { getCategories } from "@/services/admin/categoriesApi";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { createSubCategory } from "@/serverActions/admin/subCategoryAction";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 
 export default function Page() {
@@ -19,6 +21,8 @@ export default function Page() {
   const [categories,setCategories] = useState<CategoryDTO[]>([])
   const [category,setCategory]=useState<string>('');
   const [errors,setErrors] = useState<Partial<Record<keyof SubCatFormType,string>>>({})
+  const [loading,setLoading] = useState<boolean>(false)
+  const router = useRouter();
 
   useEffect(()=>{
     async function fetchCategories(){
@@ -60,11 +64,17 @@ export default function Page() {
       return 
     }
     try{
+       setLoading(true)
        const response = await createSubCategory({name,images,category})
+       setLoading(false)
        console.log(response)
+       toast.success(response.message)
+       router.push('/admin/subCategories')
     }
-    catch(error){
+    catch(error:any){
+      setLoading(false)
       console.log(error)
+      toast.error(error.message)
     }
   };
 
@@ -115,8 +125,8 @@ export default function Page() {
             </div>
 
             <div className="pt-4">
-              <Button type="submit" className="w-full text-lg py-6 rounded-xl">
-                Save Sub Category
+              <Button type="submit" disabled={loading} className="w-full text-lg py-6 rounded-xl">
+                {loading?"loading...":"Save Sub Category"}
               </Button>
             </div>
           </form>

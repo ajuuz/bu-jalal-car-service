@@ -9,13 +9,15 @@ import { FaImage } from "react-icons/fa6";
 import { BrandFormType, formZodSchema } from "@/zodSchema/formZodSchema";
 import z from "zod";
 import { createBrand } from "@/serverActions/admin/brandAction";
+import { useRouter } from "next/navigation";
 
 
 export default function Page() {
   const [images,setImages] = useState<File[]|null>(null);
   const [preview,setPreview] = useState<string|null>(null);
   const [errors,setErrors] = useState<Partial<Record<keyof BrandFormType,string>>>({})
-
+  const [loading,setLoading] = useState<boolean>(false)
+  const router = useRouter();
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -48,10 +50,13 @@ export default function Page() {
       return 
     }
     try{
-       const response = await createBrand({name,images})
-       console.log(response)
+      setLoading(true)
+      const response = await createBrand({name,images})
+      setLoading(false)
+      console.log(response)
     }
     catch(error){
+      setLoading(false)
       console.log(error)
     }
   };
@@ -87,8 +92,8 @@ export default function Page() {
             </div>
 
             <div className="pt-4">
-              <Button type="submit" className="w-full text-lg py-6 rounded-xl">
-                Save Brand
+              <Button type="submit" disabled={loading} className="w-full text-lg py-6 rounded-xl">
+                {loading?"loading...":"Save Brand"}
               </Button>
             </div>
           </form>
