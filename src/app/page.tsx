@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import HomeHeroSection from "@/components/user/HomeHeroSection";
-import { carImages, partsImage } from "@/constants/staticImages";
+import { carImages, partsImage } from "@/shared/constants/staticImages";
 import Link from "next/link";
 
 
