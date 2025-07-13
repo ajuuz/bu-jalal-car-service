@@ -40,7 +40,8 @@ export default function Page() {
     if(!parsed.success){
       const errorTree = z.treeifyError(parsed.error);
       const formattedErrors:Partial<Record<keyof FormType,string>>={
-        name: errorTree.properties?.name?.errors?.[0],
+        name: errorTree.properties?.name?.errors?.[0]||"",
+        images: errorTree.properties?.name?.errors?.[0]||"",
       }
       setErrors(formattedErrors)
       setTimeout(()=>setErrors({}),7000)

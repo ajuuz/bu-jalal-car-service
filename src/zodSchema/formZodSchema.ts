@@ -8,8 +8,13 @@ export const formZodSchema = z.object({
 export type FormType = z.infer<typeof formZodSchema>
 
 
+
+//sub cat form zod
 export const subCatFormZodSchema = formZodSchema.extend({
     category:z.string().min(1, "Category must be selected")
 })
-
 export type SubCatFormType = z.infer<typeof subCatFormZodSchema>
+
+//brand form zod
+export const brandFormZodSchema = formZodSchema;
+export type BrandFormType = z.infer<typeof brandFormZodSchema>

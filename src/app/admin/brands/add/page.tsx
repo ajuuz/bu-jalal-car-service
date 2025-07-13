@@ -5,31 +5,59 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Upload } from "lucide-react";
 import { FaImage } from "react-icons/fa6";
+import { BrandFormType, formZodSchema } from "@/zodSchema/formZodSchema";
+import z from "zod";
+import { createBrand } from "@/serverActions/admin/brandAction";
 
 
-export default function AddBrandPage() {
-  const [image,setImage] = useState<File | null>(null);
-  const [preview,setPreview] = useState<string | null>(null);
+export default function Page() {
+  const [images,setImages] = useState<File[]|null>(null);
+  const [preview,setPreview] = useState<string|null>(null);
+  const [errors,setErrors] = useState<Partial<Record<keyof BrandFormType,string>>>({})
 
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setImage(file);
+      setImages([file]);
       setPreview(URL.createObjectURL(file));
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Handle API submission here
-    console.log("Form submitted");
+    if(!images){
+      setErrors((prev)=>({...prev,images:'select a image'}))
+      setTimeout(()=>setErrors({}),7000)
+      return;
+    }
+    
+    const form = new FormData(e.currentTarget);
+    const name = form.get('brandImage') as string
+    const parsed = formZodSchema.safeParse({name,images})
+    if(!parsed.success){
+      const errorTree = z.treeifyError(parsed.error);
+      const formattedErrors:Partial<Record<keyof BrandFormType,string>>={
+        name: errorTree.properties?.name?.errors?.[0]||"",
+        images: errorTree.properties?.images?.errors?.[0]||"",
+      }
+      setErrors(formattedErrors)
+      setTimeout(()=>setErrors({}),7000)
+      return 
+    }
+    try{
+       const response = await createBrand({name,images})
+       console.log(response)
+    }
+    catch(error){
+      console.log(error)
+    }
   };
 
   return (
-    <div className=" px-6 md:px-12">
+    <div  className=" px-6 md:px-12">
       <Card className="max-w-3xl mx-auto shadow-2xl">
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-center">Add New Brand</CardTitle>
@@ -46,12 +74,16 @@ export default function AddBrandPage() {
                         <Input id="brandImage" type="file" accept="image/*" onChange={handleImageChange} className="w-full hidden"/>
                      </div>
                    )}
-                   <Label htmlFor="brandImage" className="w-full bg-black text-white p-2 rounded-md flex justify-center">Add Image</Label>
+                   <div>
+                     <Label htmlFor="brandImage" className="w-full bg-black text-white p-2 rounded-md flex justify-center">Add Image</Label>
+                     {errors?.images && <p className="text-red-500 text-center">{errors.images}</p>}
+                   </div>
                 </div>
               </div>
             <div className="space-y-3">
-              <Label htmlFor="brandName">Brand Name</Label>
-              <Input id="brandName" name="brandName" placeholder="e.g. Nike, Adidas" required />
+              <Label htmlFor="brandImage">Brand Name</Label>
+              <Input id="brandImage" name="brandImage" placeholder="e.g. Body Parts , Hoods" required />
+                     {errors?.name && <p className="text-red-500 text-center">{errors.name}</p>}
             </div>
 
             <div className="pt-4">
