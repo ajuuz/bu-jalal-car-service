@@ -1,7 +1,7 @@
 import mongoose, { models, ObjectId, Schema } from "mongoose";
 
 
-interface IProductEntity{
+export interface IProductEntity{
     _id:ObjectId,
     imageIds:string[],
     name:string,

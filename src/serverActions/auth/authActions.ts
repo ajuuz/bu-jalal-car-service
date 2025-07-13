@@ -1,13 +1,13 @@
 'use server'
 import dbConnect from '@/lib/mongodb';
 import { userModel } from '@/models/user';
-import { ServerActionResponse } from '@/types/serverActionResponse';
+import { ServerApiResponse } from '@/types/serverApiResponse';
 import {signupZodSchema, type SignupType } from '@/zodSchema/authZodSchema';
 import { redirect } from 'next/navigation';
 import { treeifyError } from 'zod';
 
 
-export const createUser=async (formData:SignupType):Promise<Omit<ServerActionResponse<undefined>,'data'>>=>{
+export const createUser=async (formData:SignupType):Promise<Omit<ServerApiResponse<undefined>,'data'>>=>{
 
   const parsed = signupZodSchema.safeParse(formData);
   if(!parsed.success){

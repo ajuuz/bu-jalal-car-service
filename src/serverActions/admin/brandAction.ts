@@ -1,12 +1,12 @@
 'use server'
 
 import dbConnect from "@/lib/mongodb";
-import { ServerActionResponse } from "@/types/serverActionResponse";
+import { ServerApiResponse } from "@/types/serverApiResponse";
 import { BrandFormType, brandFormZodSchema, FormType, formZodSchema } from "@/zodSchema/formZodSchema";
 import { uploadImages } from "../common/uploadImageAction";
 import { brandModel } from "@/models/brand";
 
-export const createBrand=async(brandDetails:BrandFormType):Promise<Omit<ServerActionResponse<undefined>,'data'>>=>{
+export const createBrand=async(brandDetails:BrandFormType):Promise<Omit<ServerApiResponse<undefined>,'data'>>=>{
 
      const parsed = brandFormZodSchema.safeParse(brandDetails)
       if(!parsed.success){

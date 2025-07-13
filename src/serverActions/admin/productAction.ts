@@ -1,13 +1,13 @@
 'use server'
 
 import dbConnect from "@/lib/mongodb";
-import { ServerActionResponse } from "@/types/serverActionResponse";
+import { ServerApiResponse } from "@/types/serverApiResponse";
 import {  ProductFormType, productZodeFormSchema } from "@/zodSchema/formZodSchema";
 import { uploadImages } from "../common/uploadImageAction";
 import { productModel } from "@/models/product";
 import { Types } from "mongoose";
 
-export const createProduct=async(productDetails:ProductFormType):Promise<Omit<ServerActionResponse<undefined>,'data'>>=>{
+export const createProduct=async(productDetails:ProductFormType):Promise<Omit<ServerApiResponse<undefined>,'data'>>=>{
 
      const parsed = productZodeFormSchema.safeParse(productDetails)
       if(!parsed.success){

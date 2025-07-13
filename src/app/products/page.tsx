@@ -1,40 +1,27 @@
 // app/products/page.tsx
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import Link from "next/link";
-import { ProductFilterBar } from "@/components/user/ProductFilterBar";
+import ProductCard from "@/components/user/ProductCard";
+import { getProducts } from "@/serverFunctions/user/product";
+import { config } from "@/shared/config";
 
-interface Product {
-  id: string;
-  name: string;
-  price: number;
-  image: string;
-  brand: string;
-}
 
-// 🧠 Simulated DB call with query param
-async function fetchProducts(brand?: string): Promise<Product[]> {
-  const allProducts = [
-    { id: "1", name: "Headphones", price: 199.99, image: "/images/headphones.jpg", brand: "Sony" },
-    { id: "2", name: "Mouse", price: 49.99, image: "/images/mouse.jpg", brand: "Logitech" },
-    { id: "3", name: "Watch", price: 149.99, image: "/images/watch.jpg", brand: "Samsung" },
-    { id: "4", name: "Speaker", price: 89.99, image: "/images/speaker.jpg", brand: "JBL" },
-  ];
+export default async function Page({ searchParams }: { searchParams:Promise<{ query?: string, brand?: string, subCategory?: string }> }) {
 
-  if (brand) {
-    return allProducts.filter((p) => p.brand.toLowerCase() === brand.toLowerCase());
-  }
+      const resolvedParams = await searchParams
+     const { query, brand, subCategory } = resolvedParams
+      const {success,message,data:products} = await getProducts(query,brand,subCategory);
+      if(!success){
+        return <div>{message}</div>
+      }
 
-  return allProducts;
-}
-
-export default async function Page({ searchParams }: { searchParams: { brand?: string } }) {
-  const products = await fetchProducts(searchParams.brand);
-
+    
   return (
-    <ProductFilterBar/>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-6 bg-gray-50 min-h-screen">
+      {
+        products.map(product=>(
+            <ProductCard key={product._id} name={product.name} image={`${config.CLOUDINARY.IMAGE_BASE_URL}/${product.imageIds[0]}`||""} brand={product.brand} price={product.price}/>
+        ))
+      }
+    </div>
   );
 }

@@ -2,11 +2,11 @@
 
 import dbConnect from "@/lib/mongodb";
 import { categoryModel } from "@/models/category";
-import { ServerActionResponse } from "@/types/serverActionResponse";
+import { ServerApiResponse } from "@/types/serverApiResponse";
 import { FormType, formZodSchema } from "@/zodSchema/formZodSchema";
 import { uploadImages } from "../common/uploadImageAction";
 
-export const createCategory=async(categoryDetails:FormType):Promise<Omit<ServerActionResponse<undefined>,'data'>>=>{
+export const createCategory=async(categoryDetails:FormType):Promise<Omit<ServerApiResponse<undefined>,'data'>>=>{
 
      const parsed = formZodSchema.safeParse(categoryDetails)
       if(!parsed.success){

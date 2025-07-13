@@ -39,7 +39,6 @@ export const ProductFilterBar = () => {
         getSubCategories(true),
       ]);
 
-      console.log(subCategoryList)
       setBrands(brandList);
       
       setSubCategories(subCategoryList);
@@ -51,9 +50,9 @@ export const ProductFilterBar = () => {
     const params = new URLSearchParams();
 
     if (search.trim()) params.set("query", search.trim());
-    selectedBrands.forEach((id) => params.append("brand", id));
-    selectedSubCategories.forEach((id) => params.append("subcategory", id));
-
+    if(selectedBrands.length) params.set("brand",selectedBrands.join('|'))
+    if(selectedSubCategories.length) params.set("subCategory",selectedSubCategories.join(','))
+    
     router.push(`?${params.toString()}`);
   };
 
