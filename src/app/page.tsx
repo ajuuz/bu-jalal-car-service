@@ -1,6 +1,9 @@
 import { Button } from "@/components/ui/button";
 import HomeHeroSection from "@/components/user/HomeHeroSection";
+import { getCategories } from "@/serverFunctions/user/category";
+import { config } from "@/shared/config";
 import { carImages, partsImage } from "@/shared/constants/staticImages";
+import Image from "next/image";
 import Link from "next/link";
 
 
@@ -58,7 +61,10 @@ const productGrid = [
   { name: 'ACE FACELIFT REAR VIEW RH', price: '197.25', oldPrice: '263.00', image:partsImage.hyundaiHood2},
   { name: 'ACE FACELIFT REAR VIEW RH', price: '197.25', oldPrice: '263.00', image:partsImage.body },
 ];
-export default function Home() {
+export default async function Home() {
+
+  const {success,message,data:categories} = await getCategories();
+
   return (
      <div className="bg-white min-h-screen">
 
@@ -91,14 +97,18 @@ export default function Home() {
       {/* Category Search */}
       <section className="mt-15 px-8">
         <h2 className="text-xl font-bold mb-4">SEARCH BY <span className="text-blue-500">CATEGORY</span></h2>
-        <div className="flex gap-4 justify-center">
-          {categories.map((cat, i) => (
-            <div key={i} className="bg-white rounded-lg shadow p-6 flex flex-col items-center min-w-[160px]">
-              <span className="text-3xl mb-2">{cat.icon}</span>
+          {!success || !categories
+          ?<div className="flex gap-4 justify-center"><div>{message}</div></div>
+          :
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4  lg:grid-cols-5 xl:grid-cols-6 gap-4 justify-center">
+            {categories.map((cat, i) => (
+              <div key={cat._id} className="bg-white rounded-lg shadow p-6 flex flex-col items-center min-w-[160px]">
+              <img src={`${config.CLOUDINARY.IMAGE_BASE_URL}/${cat.imageId}`||""} alt={cat.name}/>
               <span className="font-semibold text-center">{cat.name}</span>
-            </div>
+              </div>
           ))}
-        </div>
+          </div>
+        }
       </section>
 
       {/* Model Search */}
